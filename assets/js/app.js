@@ -101,9 +101,18 @@
     showScreen(setupScreen);
   });
   quitBtn.addEventListener("click", () => {
-    if (confirm("End the test now and see your score?")) {
+    if (quitBtn.dataset.armed === "true") {
       finishQuiz();
+      quitBtn.dataset.armed = "false";
+      quitBtn.textContent = "End & Score";
+      return;
     }
+    quitBtn.dataset.armed = "true";
+    quitBtn.textContent = "Click again to confirm";
+    setTimeout(() => {
+      quitBtn.dataset.armed = "false";
+      quitBtn.textContent = "End & Score";
+    }, 3000);
   });
   checkBtn.addEventListener("click", checkAnswer);
   nextBtn.addEventListener("click", nextQuestion);
