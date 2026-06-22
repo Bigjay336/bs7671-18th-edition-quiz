@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>18th Edition — BS 7671 Exam Practice</title>
+<link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <span class="bolt">⚡</span>
+    <div>
+      <h1>18th Edition Exam Practice</h1>
+      <p class="subtitle">BS 7671:2018 + Amendment 2 (2022)</p>
+    </div>
+  </div>
+  <div class="header-stats" id="headerStats">
+    <span id="statQuestions">60 Questions</span>
+    <span id="statPass">Pass: 72%</span>
+    <span id="statTimer">2:00:00</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- SETUP SCREEN -->
+  <section id="setupScreen" class="screen">
+    <div class="card intro-card">
+      <h2><span class="bolt">⚡</span> BS 7671 Practice Exam</h2>
+      <p>Prepare for the 18th Edition Wiring Regulations exam with timed mock tests and topic-specific practice.</p>
+    </div>
+
+    <div class="card">
+      <h3>Choose Your Mode</h3>
+      <div class="mode-grid">
+        <button class="mode-card" data-mode="mock">
+          <span class="mode-icon">⏱️</span>
+          <span class="mode-title">Mock Exam</span>
+          <span class="mode-desc">Timed exam simulation. 60 questions in 2 hours — replicates real exam conditions.</span>
+        </button>
+        <button class="mode-card" data-mode="practice">
+          <span class="mode-icon">📖</span>
+          <span class="mode-title">Practice Mode</span>
+          <span class="mode-desc">No time limit. See explanations after each question to learn as you go.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <label class="field-label" for="topicFilter">Filter by Topic (optional — leave blank for all)</label>
+      <select id="topicFilter">
+        <option value="">All Topics</option>
+      </select>
+
+      <label class="field-label" for="questionCount">Number of Questions</label>
+      <div class="count-grid" id="countGrid">
+        <button class="count-btn" data-count="10">10</button>
+        <button class="count-btn" data-count="20">20</button>
+        <button class="count-btn" data-count="60">60 (Full Exam)</button>
+        <button class="count-btn" data-count="all">All</button>
+      </div>
+
+      <button id="startBtn" class="primary-btn" disabled>Start →</button>
+      <p class="hint" id="selectionHint">Pick a mode and question count to begin.</p>
+    </div>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section id="quizScreen" class="screen hidden">
+    <div class="quiz-top">
+      <span id="qCounter">Q 1 / 60</span>
+      <span id="quizTopic" class="topic-pill"></span>
+      <span id="quizTimer" class="hidden"></span>
+    </div>
+    <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+
+    <div class="card quiz-card">
+      <h3 id="questionText"></h3>
+      <div id="optionsList" class="options-list"></div>
+      <div id="explanationBox" class="explanation-box hidden"></div>
+    </div>
+
+    <div class="quiz-actions">
+      <button id="checkBtn" class="primary-btn" disabled>Check Answer</button>
+      <button id="nextBtn" class="primary-btn hidden">Next Question →</button>
+      <button id="quitBtn" class="ghost-btn">End &amp; Score</button>
+    </div>
+  </section>
+
+  <!-- RESULTS SCREEN -->
+  <section id="resultsScreen" class="screen hidden">
+    <div class="card results-card">
+      <h2 id="resultHeadline"></h2>
+      <p id="resultScore" class="result-score"></p>
+      <div id="resultBreakdown" class="topic-breakdown"></div>
+      <div class="review-list" id="reviewList"></div>
+      <button id="restartBtn" class="primary-btn">Start a New Test →</button>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/js/questions.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
