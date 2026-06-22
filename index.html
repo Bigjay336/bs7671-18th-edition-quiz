@@ -34,7 +34,7 @@
 
     <div class="card">
       <h3>Choose Your Mode</h3>
-      <div class="mode-grid">
+      <div class="mode-grid mode-grid-3">
         <button class="mode-card" data-mode="mock">
           <span class="mode-icon">⏱️</span>
           <span class="mode-title">Mock Exam</span>
@@ -44,6 +44,11 @@
           <span class="mode-icon">📖</span>
           <span class="mode-title">Practice Mode</span>
           <span class="mode-desc">No time limit. See explanations after each question to learn as you go.</span>
+        </button>
+        <button class="mode-card" data-mode="mistakes">
+          <span class="mode-icon">🎯</span>
+          <span class="mode-title">Review My Mistakes</span>
+          <span class="mode-desc" id="mistakesModeDesc">Only questions you've gotten wrong before.</span>
         </button>
       </div>
     </div>
@@ -75,6 +80,32 @@
         <button id="manageQuestionsBtn" class="ghost-btn" style="margin-top:0;">+ Add / Manage Questions</button>
       </div>
     </div>
+
+    <div class="card">
+      <div class="manage-row">
+        <div>
+          <h3 style="margin-bottom:4px;">Your progress</h3>
+          <p class="hint" style="margin:0;text-align:left;" id="historyCountHint">No attempts recorded yet.</p>
+        </div>
+        <button id="historyBtn" class="ghost-btn" style="margin-top:0;">View History</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HISTORY SCREEN -->
+  <section id="historyScreen" class="screen hidden">
+    <div class="card">
+      <h3>Lifetime accuracy by topic</h3>
+      <div id="lifetimeBreakdown" class="topic-breakdown"></div>
+    </div>
+    <div class="card">
+      <div class="manage-row">
+        <h3 style="margin:0;">Past attempts</h3>
+        <button id="clearHistoryBtn" class="ghost-btn" style="margin-top:0;">Clear History</button>
+      </div>
+      <div id="historyList" class="custom-q-list" style="margin-top:14px;"></div>
+    </div>
+    <button id="backFromHistoryBtn" class="ghost-btn" style="width:100%;">← Back</button>
   </section>
 
   <!-- ADD / MANAGE QUESTIONS SCREEN -->
@@ -122,8 +153,16 @@
     </div>
 
     <div class="card">
-      <h3>Your added questions</h3>
-      <div id="customQuestionsList" class="custom-q-list"></div>
+      <div class="manage-row">
+        <h3 style="margin:0;">Your added questions</h3>
+        <div style="display:flex;gap:8px;">
+          <button id="exportQuestionsBtn" class="ghost-btn" style="margin-top:0;">Export</button>
+          <button id="importQuestionsBtn" class="ghost-btn" style="margin-top:0;">Import</button>
+          <input id="importFileInput" type="file" accept="application/json" class="hidden" />
+        </div>
+      </div>
+      <p class="hint" id="importError" style="color:var(--red);text-align:left;display:none;margin-top:10px;"></p>
+      <div id="customQuestionsList" class="custom-q-list" style="margin-top:14px;"></div>
     </div>
   </section>
 
@@ -132,9 +171,12 @@
     <div class="quiz-top">
       <span id="qCounter">Q 1 / 60</span>
       <span id="quizTopic" class="topic-pill"></span>
+      <button id="flagBtn" class="flag-btn">🏳️ Flag</button>
       <span id="quizTimer" class="hidden"></span>
     </div>
     <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+
+    <div id="navigatorGrid" class="navigator-grid"></div>
 
     <div class="card quiz-card">
       <h3 id="questionText"></h3>
@@ -143,6 +185,7 @@
     </div>
 
     <div class="quiz-actions">
+      <button id="prevBtn" class="ghost-btn">← Prev</button>
       <button id="checkBtn" class="primary-btn" disabled>Check Answer</button>
       <button id="nextBtn" class="primary-btn hidden">Next Question →</button>
       <button id="quitBtn" class="ghost-btn">End &amp; Score</button>
