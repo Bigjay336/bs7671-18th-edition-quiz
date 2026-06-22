@@ -354,6 +354,8 @@ select#topicFilter {
 .review-item .ra.you-wrong { color: var(--red); }
 .review-item .ra.you-right { color: var(--green); }
 .review-item .ref { margin-top: 6px; color: var(--amber-dim); font-size: 0.8rem; }
+.review-item .explain { margin-top: 8px; color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; }
+.ref-cite { display: block; margin-top: 6px; color: var(--amber-dim); font-size: 0.8rem; }
 
 /* MANAGE / ADD QUESTIONS */
 .manage-row {
