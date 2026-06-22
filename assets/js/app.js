@@ -84,6 +84,15 @@
     screen.classList.remove("hidden");
   }
 
+  function formatExplanation(q) {
+    const parts = [];
+    if (q.explanation) parts.push(escapeHtml(q.explanation));
+    if (q.reference && q.reference !== q.explanation) {
+      parts.push(`<span class="ref-cite">Ref: ${escapeHtml(q.reference)}</span>`);
+    }
+    return parts.join(" ");
+  }
+
   function escapeHtml(str) {
     const div = document.createElement("div");
     div.textContent = str;
@@ -585,7 +594,7 @@
       explanationBox.classList.remove("hidden");
       explanationBox.innerHTML = `<strong>${r.correct ? "Correct." : "Not quite."}</strong> ${
         r.correct ? "" : `Correct answer: ${escapeHtml(q.options[q.correct])}. `
-      }${q.explanation ? `Reference: ${escapeHtml(q.explanation)}` : ""}`;
+      }${formatExplanation(q)}`;
     }
   }
 
@@ -680,7 +689,7 @@
         <div class="rq">${escapeHtml(q.question)}</div>
         <div class="ra ${r.correct ? "you-right" : "you-wrong"}">Your answer: ${escapeHtml(yourAnswerText)}</div>
         ${r.correct ? "" : `<div class="ra you-right">Correct answer: ${escapeHtml(correctAnswerText)}</div>`}
-        ${q.explanation ? `<div class="ref">Ref: ${escapeHtml(q.explanation)}</div>` : ""}
+        <div class="explain">${formatExplanation(q)}</div>
       `;
       reviewList.appendChild(item);
     });
