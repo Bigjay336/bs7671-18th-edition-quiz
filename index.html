@@ -65,6 +65,66 @@
       <button id="startBtn" class="primary-btn" disabled>Start →</button>
       <p class="hint" id="selectionHint">Pick a mode and question count to begin.</p>
     </div>
+
+    <div class="card">
+      <div class="manage-row">
+        <div>
+          <h3 style="margin-bottom:4px;">Your own questions</h3>
+          <p class="hint" style="margin:0;text-align:left;" id="customCountHint">No custom questions added yet.</p>
+        </div>
+        <button id="manageQuestionsBtn" class="ghost-btn" style="margin-top:0;">+ Add / Manage Questions</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADD / MANAGE QUESTIONS SCREEN -->
+  <section id="manageScreen" class="screen hidden">
+    <div class="card">
+      <h3>Add a Question</h3>
+      <p class="hint" style="text-align:left;margin:0 0 14px;">Added questions are saved in this browser and mixed in with the built-in 60 for future quizzes.</p>
+
+      <label class="field-label" for="newTopic">Topic</label>
+      <input id="newTopic" type="text" list="topicSuggestions" placeholder="e.g. Protection for Safety" />
+      <datalist id="topicSuggestions"></datalist>
+
+      <label class="field-label" for="newQuestionText">Question</label>
+      <textarea id="newQuestionText" rows="2" placeholder="Type the question..."></textarea>
+
+      <label class="field-label">Options (mark the correct one)</label>
+      <div class="new-option-row" data-idx="0">
+        <input type="radio" name="newCorrect" value="0" checked />
+        <span class="opt-letter">A</span>
+        <input type="text" class="new-option-input" placeholder="Option A" />
+      </div>
+      <div class="new-option-row" data-idx="1">
+        <input type="radio" name="newCorrect" value="1" />
+        <span class="opt-letter">B</span>
+        <input type="text" class="new-option-input" placeholder="Option B" />
+      </div>
+      <div class="new-option-row" data-idx="2">
+        <input type="radio" name="newCorrect" value="2" />
+        <span class="opt-letter">C</span>
+        <input type="text" class="new-option-input" placeholder="Option C" />
+      </div>
+      <div class="new-option-row" data-idx="3">
+        <input type="radio" name="newCorrect" value="3" />
+        <span class="opt-letter">D</span>
+        <input type="text" class="new-option-input" placeholder="Option D" />
+      </div>
+
+      <label class="field-label" for="newExplanation">Reference / explanation (optional)</label>
+      <input id="newExplanation" type="text" placeholder="e.g. BS 7671:2018+A2 411.3.3" />
+
+      <p class="hint" id="addQuestionError" style="color:var(--red);text-align:left;display:none;"></p>
+
+      <button id="saveQuestionBtn" class="primary-btn">Save Question</button>
+      <button id="backToSetupBtn" class="ghost-btn" style="width:100%;margin-top:10px;">← Back</button>
+    </div>
+
+    <div class="card">
+      <h3>Your added questions</h3>
+      <div id="customQuestionsList" class="custom-q-list"></div>
+    </div>
   </section>
 
   <!-- QUIZ SCREEN -->
