@@ -4,11 +4,24 @@
 
   const PASS_PERCENT = 72;
   const MOCK_DURATION_SECONDS = 2 * 60 * 60; // 2:00:00
+  const STORAGE_KEY = "bs7671_custom_questions";
 
   // ---- DOM refs ----
   const setupScreen = document.getElementById("setupScreen");
   const quizScreen = document.getElementById("quizScreen");
   const resultsScreen = document.getElementById("resultsScreen");
+  const manageScreen = document.getElementById("manageScreen");
+
+  const manageQuestionsBtn = document.getElementById("manageQuestionsBtn");
+  const backToSetupBtn = document.getElementById("backToSetupBtn");
+  const customCountHint = document.getElementById("customCountHint");
+  const newTopic = document.getElementById("newTopic");
+  const topicSuggestions = document.getElementById("topicSuggestions");
+  const newQuestionText = document.getElementById("newQuestionText");
+  const newExplanation = document.getElementById("newExplanation");
+  const saveQuestionBtn = document.getElementById("saveQuestionBtn");
+  const addQuestionError = document.getElementById("addQuestionError");
+  const customQuestionsList = document.getElementById("customQuestionsList");
 
   const topicFilter = document.getElementById("topicFilter");
   const countGrid = document.getElementById("countGrid");
@@ -49,16 +62,126 @@
     secondsRemaining: MOCK_DURATION_SECONDS,
   };
 
+  // ---- custom question storage ----
+  function loadCustomQuestions() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveCustomQuestions(list) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+  }
+
+  function getAllQuestions() {
+    return QUESTION_BANK.concat(loadCustomQuestions());
+  }
+
   // ---- setup screen population ----
   function populateTopics() {
-    const topics = Array.from(new Set(QUESTION_BANK.map((q) => q.topic))).sort();
+    const topics = Array.from(new Set(getAllQuestions().map((q) => q.topic))).sort();
+    topicFilter.innerHTML = '<option value="">All Topics</option>';
+    topicSuggestions.innerHTML = "";
     topics.forEach((t) => {
       const opt = document.createElement("option");
       opt.value = t;
       opt.textContent = t;
       topicFilter.appendChild(opt);
+
+      const dlOpt = document.createElement("option");
+      dlOpt.value = t;
+      topicSuggestions.appendChild(dlOpt);
     });
   }
+
+  function updateCustomCountHint() {
+    const n = loadCustomQuestions().length;
+    customCountHint.textContent = n === 0
+      ? "No custom questions added yet."
+      : `${n} custom question${n === 1 ? "" : "s"} added — mixed into quizzes automatically.`;
+  }
+
+  function renderCustomQuestionsList() {
+    const list = loadCustomQuestions();
+    customQuestionsList.innerHTML = "";
+    if (list.length === 0) {
+      customQuestionsList.innerHTML = '<p class="empty-note">You haven\'t added any questions yet.</p>';
+      return;
+    }
+    list.slice().reverse().forEach((q) => {
+      const item = document.createElement("div");
+      item.className = "custom-q-item";
+      item.innerHTML = `
+        <div class="cq-body">
+          <div class="cq-topic">${escapeHtml(q.topic)}</div>
+          <div class="cq-text">${escapeHtml(q.question)}</div>
+        </div>
+        <button class="cq-delete" data-id="${q.id}">Delete</button>
+      `;
+      customQuestionsList.appendChild(item);
+    });
+    customQuestionsList.querySelectorAll(".cq-delete").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = Number(btn.dataset.id);
+        const updated = loadCustomQuestions().filter((q) => q.id !== id);
+        saveCustomQuestions(updated);
+        renderCustomQuestionsList();
+        updateCustomCountHint();
+        populateTopics();
+      });
+    });
+  }
+
+  function resetAddForm() {
+    newTopic.value = "";
+    newQuestionText.value = "";
+    newExplanation.value = "";
+    document.querySelectorAll(".new-option-input").forEach((i) => (i.value = ""));
+    document.querySelector('input[name="newCorrect"][value="0"]').checked = true;
+    addQuestionError.style.display = "none";
+  }
+
+  manageQuestionsBtn.addEventListener("click", () => {
+    renderCustomQuestionsList();
+    showScreen(manageScreen);
+  });
+  backToSetupBtn.addEventListener("click", () => {
+    showScreen(setupScreen);
+  });
+
+  saveQuestionBtn.addEventListener("click", () => {
+    const topic = newTopic.value.trim() || "Custom";
+    const question = newQuestionText.value.trim();
+    const optionInputs = Array.from(document.querySelectorAll(".new-option-input"));
+    const options = optionInputs.map((i) => i.value.trim());
+    const correctRadio = document.querySelector('input[name="newCorrect"]:checked');
+    const correct = correctRadio ? Number(correctRadio.value) : 0;
+    const explanation = newExplanation.value.trim();
+
+    if (!question) {
+      addQuestionError.textContent = "Please enter a question.";
+      addQuestionError.style.display = "block";
+      return;
+    }
+    if (options.some((o) => !o)) {
+      addQuestionError.textContent = "Please fill in all 4 options.";
+      addQuestionError.style.display = "block";
+      return;
+    }
+
+    const list = loadCustomQuestions();
+    const nextId = (Math.max(0, ...QUESTION_BANK.map((q) => q.id), ...list.map((q) => q.id)) || 0) + 1;
+    list.push({ id: nextId, topic, question, options, correct, explanation });
+    saveCustomQuestions(list);
+
+    resetAddForm();
+    renderCustomQuestionsList();
+    updateCustomCountHint();
+    populateTopics();
+  });
 
   function shuffle(arr) {
     const a = arr.slice();
@@ -118,7 +241,7 @@
   nextBtn.addEventListener("click", nextQuestion);
 
   function showScreen(screen) {
-    [setupScreen, quizScreen, resultsScreen].forEach((s) => s.classList.add("hidden"));
+    [setupScreen, quizScreen, resultsScreen, manageScreen].forEach((s) => s.classList.add("hidden"));
     screen.classList.remove("hidden");
   }
 
@@ -145,7 +268,8 @@
   // ---- start quiz ----
   function startQuiz() {
     const topic = topicFilter.value;
-    let pool = topic ? QUESTION_BANK.filter((q) => q.topic === topic) : QUESTION_BANK.slice();
+    const allQuestions = getAllQuestions();
+    let pool = topic ? allQuestions.filter((q) => q.topic === topic) : allQuestions.slice();
     pool = shuffle(pool);
 
     let n;
@@ -339,4 +463,5 @@
   // ---- init ----
   populateTopics();
   updateStartEnabled();
+  updateCustomCountHint();
 })();
