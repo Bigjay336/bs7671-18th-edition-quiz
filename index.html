@@ -90,6 +90,208 @@
         <button id="historyBtn" class="ghost-btn" style="margin-top:0;">View History</button>
       </div>
     </div>
+
+    <div class="card" style="border-color:var(--amber-dim);">
+      <div class="manage-row">
+        <div>
+          <h3 style="margin-bottom:4px;">⚡ Quick Reference</h3>
+          <p class="hint" style="margin:0;text-align:left;">Key numbers, tables &amp; rules for the exam.</p>
+        </div>
+        <button id="cramBtn" class="ghost-btn" style="margin-top:0;border-color:var(--amber-dim);color:var(--amber);">Open Cram Sheet →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CRAM SHEET SCREEN -->
+  <section id="cramScreen" class="screen hidden">
+
+    <div class="card">
+      <h3>📐 Voltage Bands</h3>
+      <table class="ref-table">
+        <tr><th>Band</th><th>AC (between conductors)</th><th>DC (ripple-free)</th></tr>
+        <tr><td>Extra-Low Voltage (ELV)</td><td>≤ 50 V</td><td>≤ 120 V</td></tr>
+        <tr><td>Low Voltage (LV)</td><td>50 V – 1000 V</td><td>120 V – 1500 V</td></tr>
+      </table>
+      <p class="ref-note">SELV / PELV must be ≤ 50 V AC or ≤ 120 V DC (ripple-free).</p>
+    </div>
+
+    <div class="card">
+      <h3>🌍 Earthing System Types</h3>
+      <table class="ref-table">
+        <tr><th>System</th><th>Source earth</th><th>Consumer earth</th><th>Typical Ze</th></tr>
+        <tr><td><strong>TN-S</strong></td><td>Earthed at source</td><td>Separate PE conductor back to source</td><td>0.2–0.8 Ω</td></tr>
+        <tr><td><strong>TN-C-S</strong> (PME)</td><td>Earthed at source</td><td>PEN combined to MET; CNE to earth electrode at property</td><td>0.2–0.35 Ω</td></tr>
+        <tr><td><strong>TT</strong></td><td>Earthed at source</td><td>Consumer's own electrode, independent of source</td><td>Up to 200 Ω</td></tr>
+      </table>
+      <p class="ref-note">First letter: T = source earthed, I = source isolated. Second letter: T = consumer electrode, N = connected to source earth via conductor.</p>
+    </div>
+
+    <div class="card">
+      <h3>⏱ Disconnection Times (TN systems)</h3>
+      <table class="ref-table">
+        <tr><th>Circuit type</th><th>230 V AC</th></tr>
+        <tr><td>Final circuits ≤ 32 A (socket outlets etc.)</td><td><strong>0.4 s</strong></td></tr>
+        <tr><td>Final circuits &gt; 32 A / distribution circuits</td><td><strong>5 s</strong></td></tr>
+      </table>
+      <p class="ref-note">TT systems: RCD required. Disconnection usually 0.2 s or 1 s depending on circuit type, governed by 50 V / Zs formula.</p>
+      <p class="ref-note">Touch voltage limit: <strong>50 V AC</strong> (25 V AC in special locations).</p>
+    </div>
+
+    <div class="card">
+      <h3>📊 Max Earth Fault Loop Impedance (Zs) — Common Devices</h3>
+      <p class="ref-note" style="margin-bottom:10px;">For 0.4 s disconnection at 230 V (final circuits ≤ 32 A), from Tables 41.2–41.4:</p>
+      <table class="ref-table">
+        <tr><th>Device &amp; Rating</th><th>Max Zs (Ω)</th></tr>
+        <tr><td>Type B MCB — 6 A</td><td>7.67</td></tr>
+        <tr><td>Type B MCB — 16 A</td><td>2.87</td></tr>
+        <tr><td>Type B MCB — 20 A</td><td>2.30</td></tr>
+        <tr><td>Type B MCB — 32 A</td><td>1.44</td></tr>
+        <tr><td>Type C MCB — 6 A</td><td>3.84</td></tr>
+        <tr><td>Type C MCB — 16 A</td><td>1.44</td></tr>
+        <tr><td>Type C MCB — 32 A</td><td>0.72</td></tr>
+        <tr><td>Type D MCB — 32 A</td><td>0.36</td></tr>
+        <tr><td>BS 88-2 fuse — 16 A</td><td>2.73</td></tr>
+        <tr><td>BS 88-2 fuse — 32 A</td><td>1.70</td></tr>
+        <tr><td>BS 88-2 fuse — 63 A</td><td>0.63</td></tr>
+        <tr><td>BS 3036 fuse — 20 A</td><td>1.09</td></tr>
+        <tr><td>BS 1361 fuse — 30 A</td><td>1.84</td></tr>
+      </table>
+      <p class="ref-note">For TT: RCD I∆n ≤ 50 V ÷ Zs (e.g. Zs = 500 Ω → I∆n ≤ 100 mA)</p>
+    </div>
+
+    <div class="card">
+      <h3>🔌 BS 3036 Semi-Enclosed Fuse Rule</h3>
+      <p class="ref-note">Must apply a <strong>0.725 correction factor</strong> (fusing factor), meaning the conductor's current-carrying capacity (Iz) must be at least:</p>
+      <div class="ref-formula">Iz ≥ In ÷ 0.725 &nbsp;=&nbsp; In × 1.38</div>
+      <p class="ref-note">Example: 20 A fuse → Iz must be ≥ 27.6 A</p>
+    </div>
+
+    <div class="card">
+      <h3>📦 Cable Grouping / Rating Factors (Table 4C1 — clipped direct)</h3>
+      <table class="ref-table">
+        <tr><th>No. of circuits</th><th>Factor</th></tr>
+        <tr><td>1</td><td>1.00</td></tr>
+        <tr><td>2</td><td>0.80</td></tr>
+        <tr><td>3</td><td>0.70</td></tr>
+        <tr><td>4</td><td>0.65</td></tr>
+        <tr><td>5</td><td>0.60</td></tr>
+        <tr><td>6</td><td>0.57</td></tr>
+        <tr><td>7</td><td>0.54</td></tr>
+        <tr><td>8</td><td>0.52</td></tr>
+        <tr><td>9</td><td>0.50</td></tr>
+        <tr><td>12</td><td>0.45</td></tr>
+      </table>
+      <p class="ref-note">200 mm thermally-insulated cavity wall (Item 2.6): derating factor <strong>0.63</strong></p>
+    </div>
+
+    <div class="card">
+      <h3>🛡 Protective Conductor &amp; Bonding Sizes</h3>
+      <table class="ref-table">
+        <tr><th>Conductor</th><th>Minimum CSA (Cu)</th></tr>
+        <tr><td>Main protective bonding (to gas, water, structural steel etc.)</td><td>6 mm² (or half incoming neutral CSA, min 6 mm², max 25 mm²)</td></tr>
+        <tr><td>Supplementary bonding — mechanically protected</td><td>2.5 mm²</td></tr>
+        <tr><td>Supplementary bonding — NOT mechanically protected</td><td>4.0 mm²</td></tr>
+        <tr><td>Main bonding connection to gas service</td><td>Within 600 mm of meter outlet, consumer's side</td></tr>
+        <tr><td>EMC flat bonding ring conductor</td><td>25 mm × 3 mm</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🔬 Insulation Resistance Test Voltages (Table 64)</h3>
+      <table class="ref-table">
+        <tr><th>Circuit nominal voltage</th><th>Test voltage (DC)</th><th>Min result</th></tr>
+        <tr><td>SELV / PELV</td><td>250 V</td><td>≥ 1 MΩ</td></tr>
+        <tr><td>Up to and including 500 V</td><td><strong>500 V</strong></td><td>≥ 1 MΩ</td></tr>
+        <tr><td>Above 500 V</td><td><strong>1000 V</strong></td><td>≥ 1 MΩ</td></tr>
+      </table>
+      <p class="ref-note">Standard 230/400 V LV installations → 500 V DC test, minimum 1 MΩ.</p>
+    </div>
+
+    <div class="card">
+      <h3>🛁 Bathroom Zones — Key Rules (Section 701)</h3>
+      <table class="ref-table">
+        <tr><th>Zone</th><th>Location</th><th>Min IP</th><th>Shock protection</th></tr>
+        <tr><td><strong>Zone 0</strong></td><td>Inside the bath / shower tray</td><td>IPX7</td><td>SELV ≤ 12 V AC only</td></tr>
+        <tr><td><strong>Zone 1</strong></td><td>Above bath/shower to 2.25 m</td><td>IPX4</td><td>SELV; switches must be SELV</td></tr>
+        <tr><td><strong>Zone 2</strong></td><td>0.6 m outside zone 1</td><td>IPX4</td><td>SELV or normal supply</td></tr>
+      </table>
+      <p class="ref-note">"Obstacles" and "placing out of reach" are <strong>not permitted</strong> in any bathroom zone (Reg 701.410.3.5).</p>
+      <p class="ref-note">Shaver socket (BS EN 61558-2-5) permitted in Zone 1 — works by electrical separation (isolating transformer).</p>
+    </div>
+
+    <div class="card">
+      <h3>🏊 Swimming Pool &amp; Fountain Zones (Sections 702 &amp; 703)</h3>
+      <table class="ref-table">
+        <tr><th>Location</th><th>Zones 0 &amp; 1</th><th>Protection required</th></tr>
+        <tr><td>Swimming pool</td><td>In &amp; immediately around water</td><td>SELV only (702.410.3.4.1)</td></tr>
+        <tr><td>Fountain zones 0 &amp; 1</td><td>In &amp; around fountain</td><td>Min mechanical protection AG2</td></tr>
+        <tr><td>Hot air sauna</td><td>All zones</td><td>Min IPX4</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🌊 IP &amp; IK Ratings — Quick Guide</h3>
+      <table class="ref-table">
+        <tr><th>Code</th><th>First digit (solids)</th><th>Second digit (liquids)</th></tr>
+        <tr><td>IP2X / IPX2</td><td>Fingers (&gt;12 mm)</td><td>Dripping water (vertical)</td></tr>
+        <tr><td>IP3X / IPX3</td><td>Tools (&gt;2.5 mm)</td><td>Spraying water (60°)</td></tr>
+        <tr><td>IP4X / IPX4</td><td>Wires (&gt;1 mm)</td><td>Splashing water (any dir.)</td></tr>
+        <tr><td>IPX5</td><td>—</td><td>Water jets</td></tr>
+        <tr><td>IPX7</td><td>—</td><td>Temporary immersion</td></tr>
+        <tr><td>IPX8</td><td>—</td><td>Continuous immersion</td></tr>
+      </table>
+      <p class="ref-note">Outdoor lighting minimum: <strong>IP33</strong>. Marina pontoon (AG2 impact) minimum: <strong>IK08</strong>.</p>
+      <p class="ref-note">IK codes relate to <strong>mechanical impact</strong> protection (not ingress). AG2 external influence = IK08 required.</p>
+    </div>
+
+    <div class="card">
+      <h3>⚡ SPD Types (Section 534)</h3>
+      <table class="ref-table">
+        <tr><th>Type</th><th>Where installed</th><th>Handles</th></tr>
+        <tr><td><strong>Type 1</strong></td><td>Origin of supply / main intake</td><td>Direct / nearby lightning strike energy</td></tr>
+        <tr><td><strong>Type 2</strong></td><td>Sub-distribution boards</td><td>Switching transients &amp; indirect lightning</td></tr>
+        <tr><td><strong>Type 3</strong></td><td>Near sensitive equipment</td><td>Residual transient energy</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🏷 External Influence Codes (Appendix 5)</h3>
+      <table class="ref-table">
+        <tr><th>Letter</th><th>Category</th><th>Key sub-codes</th></tr>
+        <tr><td><strong>A</strong></td><td>Environment</td><td>AA = ambient temp, AD = water/moisture presence, AF = corrosion</td></tr>
+        <tr><td><strong>B</strong></td><td>Utilisation</td><td>BA = capability of persons, BB = electrical resistance, BC = contact with earth, BD = evacuation conditions, BE = fire risk</td></tr>
+        <tr><td><strong>C</strong></td><td>Construction of buildings</td><td>CA = materials, CB = structure</td></tr>
+      </table>
+      <p class="ref-note">BD4 = high density occupation + difficult evacuation (most demanding). AA4 = -5°C to +40°C. AD7 = immersion.</p>
+    </div>
+
+    <div class="card">
+      <h3>🏗 Special Locations — Quick Hits</h3>
+      <table class="ref-table">
+        <tr><th>Location</th><th>Key rule</th></tr>
+        <tr><td>Caravan site overhead conductors</td><td>Min <strong>6.0 m</strong> in vehicle movement areas</td></tr>
+        <tr><td>Outdoor lighting min IP</td><td><strong>IP33</strong> (Reg 714.512.2.105)</td></tr>
+        <tr><td>Outdoor lighting — internally fed wall luminaire</td><td><strong>Not</strong> classified as an outdoor lighting installation</td></tr>
+        <tr><td>Bathroom — obstacles protective measure</td><td><strong>Not permitted</strong> in any zone</td></tr>
+        <tr><td>Fire risk location — thermal cutout reset</td><td>Must be <strong>manual only</strong> (Reg 422.1.3)</td></tr>
+        <tr><td>Overload protection omitted (fire alarm, etc.)</td><td>Permitted where tripping creates greater danger (Reg 433.3)</td></tr>
+        <tr><td>Firefighter's switch position</td><td>At <strong>main entrance</strong> to building, clearly marked</td></tr>
+        <tr><td>Non-flame-propagating system ≤ 710 mm²</td><td>Internal sealing <strong>not required</strong> (Reg 527.2.3)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📋 Exam Format Reminder</h3>
+      <table class="ref-table">
+        <tr><td>Questions</td><td><strong>60 multiple choice</strong></td></tr>
+        <tr><td>Time allowed</td><td><strong>2 hours</strong></td></tr>
+        <tr><td>Pass mark</td><td><strong>72%</strong> (43 or more correct)</td></tr>
+        <tr><td>Standard</td><td>BS 7671:2018 + Amendment 2 (2022)</td></tr>
+        <tr><td>Book allowed?</td><td><strong>No</strong> — closed book</td></tr>
+      </table>
+    </div>
+
+    <button id="backFromCramBtn" class="ghost-btn" style="width:100%;">← Back to Setup</button>
   </section>
 
   <!-- HISTORY SCREEN -->
