@@ -14,6 +14,7 @@
   const resultsScreen = document.getElementById("resultsScreen");
   const manageScreen = document.getElementById("manageScreen");
   const historyScreen = document.getElementById("historyScreen");
+  const cramScreen = document.getElementById("cramScreen");
 
   const manageQuestionsBtn = document.getElementById("manageQuestionsBtn");
   const backToSetupBtn = document.getElementById("backToSetupBtn");
@@ -65,7 +66,7 @@
   const reviewList = document.getElementById("reviewList");
   const restartBtn = document.getElementById("restartBtn");
 
-  const ALL_SCREENS = [setupScreen, quizScreen, resultsScreen, manageScreen, historyScreen];
+  const ALL_SCREENS = [setupScreen, quizScreen, resultsScreen, manageScreen, historyScreen, cramScreen];
 
   // ---- state ----
   let state = {
@@ -326,6 +327,9 @@
     showScreen(historyScreen);
   });
   backFromHistoryBtn.addEventListener("click", () => showScreen(setupScreen));
+
+  document.getElementById("cramBtn").addEventListener("click", () => showScreen(cramScreen));
+  document.getElementById("backFromCramBtn").addEventListener("click", () => showScreen(setupScreen));
   clearHistoryBtn.addEventListener("click", () => {
     saveHistory([]);
     renderHistoryScreen();
